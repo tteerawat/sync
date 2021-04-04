@@ -1,23 +1,7 @@
 defmodule Sync.Github do
-  defmodule User do
-    defstruct [:id, :name]
+  @behaviour Sync.Github.Behaviour
 
-    @type t :: %__MODULE__{
-            id: non_neg_integer(),
-            name: String.t()
-          }
-  end
-
-  defmodule PR do
-    defstruct [:id, :title, :body]
-
-    @type t :: %__MODULE__{
-            id: non_neg_integer(),
-            title: String.t(),
-            body: String.t()
-          }
-  end
-
+  alias Sync.Github.{PR, User}
   alias Sync.HTTPClient
 
   @base_api_url "https://api.github.com"
@@ -41,7 +25,7 @@ defmodule Sync.Github do
     end)
   end
 
-  @spec list_repo_prs!(String.t(), String.t(), Keyword.t()) :: [PR.t()]
+  @impl true
   def list_repo_prs!(owner, repo, opts \\ []) do
     base_api_url = Keyword.get(opts, :base_api_url, @base_api_url)
 
