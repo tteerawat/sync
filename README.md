@@ -1,19 +1,23 @@
 # Sync
 
-To start your Phoenix server:
+## Set up
 
-  * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+* First of all, we need working installations of Elixir and Erlang. The easiest way to achieve this is via [Installation Page](https://elixir-lang.org/install.html).
+* Set some required environment variables (see `.env.sample` file).
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Running
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+* Install Elixir and Node.js dependencies with `mix setup`
+* Start Phoenix endpoint with `mix phx.server`
+* Visit `http://localhost:4000`
 
-## Learn more
+## Testing
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+You can run tests with `mix test`
+
+## Things I should have done + Things I wanna improve
+
+* Ask Aleksandra some more questions. I'm quite sure that the implementation I've done is not correct :(
+* Make it more convenient when it comes to owner/repo configuration.
+* Handle error cases more properly.
+* Add more tests.
