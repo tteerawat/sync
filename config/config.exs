@@ -7,6 +7,11 @@
 # General application configuration
 use Mix.Config
 
+config :sync,
+  github: Sync.Github,
+  owner: System.get_env("GITHUB_REPO_OWNER"),
+  repo: System.get_env("GITHUB_REPO_NAME")
+
 # Configures the endpoint
 config :sync, SyncWeb.Endpoint,
   url: [host: "localhost"],

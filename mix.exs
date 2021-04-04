@@ -19,7 +19,7 @@ defmodule Sync.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Sync.Application, []},
+      mod: {Sync.Application, [env: Mix.env()]},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -36,6 +36,7 @@ defmodule Sync.MixProject do
       {:bypass, "~> 2.1", only: :test},
       {:finch, "~> 0.6"},
       {:jason, "~> 1.0"},
+      {:mox, "~> 1.0", only: :test},
       {:phoenix, "~> 1.5.8"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
