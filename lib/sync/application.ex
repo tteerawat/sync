@@ -12,9 +12,10 @@ defmodule Sync.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Sync.PubSub},
       # Start the Endpoint (http/https)
-      SyncWeb.Endpoint
+      SyncWeb.Endpoint,
       # Start a worker by calling: Sync.Worker.start_link(arg)
       # {Sync.Worker, arg}
+      {Finch, name: Sync.Finch}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

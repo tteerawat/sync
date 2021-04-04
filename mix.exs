@@ -33,6 +33,8 @@ defmodule Sync.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bypass, "~> 2.1", only: :test},
+      {:finch, "~> 0.6"},
       {:jason, "~> 1.0"},
       {:phoenix, "~> 1.5.8"},
       {:phoenix_html, "~> 2.11"},
