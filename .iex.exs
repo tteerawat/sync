@@ -1,0 +1,1 @@
+alias Sync.Github
