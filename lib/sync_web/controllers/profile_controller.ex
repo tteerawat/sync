@@ -5,8 +5,10 @@ defmodule SyncWeb.ProfileController do
 
   plug :authenticate
 
+  @pr_sync_server Application.compile_env!(:sync, :pr_sync_server)
+
   def show(conn, _params) do
-    repo_users = Sync.PRSyncServer.list_users()
+    repo_users = @pr_sync_server.list_users()
 
     render(conn, "show.html", repo_users: repo_users)
   end

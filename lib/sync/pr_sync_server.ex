@@ -1,4 +1,6 @@
 defmodule Sync.PRSyncServer do
+  @behaviour Sync.PRSyncServer.Behaviour
+
   use GenServer
 
   require Logger
@@ -10,17 +12,17 @@ defmodule Sync.PRSyncServer do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
-  @spec list_prs :: [Sync.Github.PR.t()]
+  @impl Sync.PRSyncServer.Behaviour
   def list_prs do
     GenServer.call(__MODULE__, :list_prs)
   end
 
-  @spec list_users :: [Sync.Github.User.t()]
+  @impl Sync.PRSyncServer.Behaviour
   def list_users do
     GenServer.call(__MODULE__, :list_users)
   end
 
-  @impl true
+  @impl GenServer
   def init(opts) do
     initial_state = %{
       owner: Keyword.fetch!(opts, :owner),
@@ -36,19 +38,19 @@ defmodule Sync.PRSyncServer do
     {:ok, initial_state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_call(:list_prs, _, state) do
     {:reply, state.prs, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_call(:list_users, _, %{owner: owner, repo: repo} = state) do
     users = @github.list_repo_users!(owner, repo)
 
     {:reply, users, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_info(:sync, %{owner: owner, repo: repo, prs: current_prs, page: page, per_page: per_page} = state) do
     Logger.info("Syncing PRs ...")
 

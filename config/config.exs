@@ -9,6 +9,7 @@ use Mix.Config
 
 config :sync,
   github: Sync.Github,
+  pr_sync_server: Sync.PRSyncServer,
   owner: System.get_env("GITHUB_REPO_OWNER"),
   repo: System.get_env("GITHUB_REPO_NAME")
 
