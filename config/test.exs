@@ -10,3 +10,7 @@ config :sync, SyncWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :sync, Sync.Github,
+  client_id: "client-id-123",
+  client_secret: "client-secret-123"

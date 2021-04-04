@@ -12,6 +12,10 @@ config :sync,
   owner: System.get_env("GITHUB_REPO_OWNER"),
   repo: System.get_env("GITHUB_REPO_NAME")
 
+config :sync, Sync.Github,
+  client_id: System.get_env("GITHUB_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+
 # Configures the endpoint
 config :sync, SyncWeb.Endpoint,
   url: [host: "localhost"],
