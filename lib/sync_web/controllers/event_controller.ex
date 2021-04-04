@@ -5,11 +5,13 @@ defmodule SyncWeb.EventController do
 
   plug :authenticate
 
+  @pr_sync_server Application.fetch_env!(:sync, :pr_sync_server)
+
   def index(conn, _params) do
     current_mappped_user = conn.assigns.current_mapped_user
 
     events =
-      Sync.PRSyncServer.list_prs()
+      @pr_sync_server.list_prs()
       |> Enum.filter(fn pr -> String.contains?(pr.body, "@#{current_mappped_user.name}") end)
 
     render(conn, "index.html", events: events)
