@@ -1,0 +1,6 @@
+<%= if @current_user do %>
+    <%= link("Sign out", to: Routes.auth_path(@conn, :sign_out), method: :delete, class: "button") %>
+    <%= link("Go to profile page", to: Routes.profile_path(@conn, :show)) %>
+<% else %>
+    <%= link("Sign in with Github", to: Routes.auth_path(@conn, :sign_in), class: "button button-outline") %>
+<% end %>

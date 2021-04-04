@@ -1,9 +1,21 @@
 defmodule SyncWeb.PageControllerTest do
-  use SyncWeb.ConnCase
+  use SyncWeb.ConnCase, async: true
 
-  test "GET /", %{conn: conn} do
-    conn = get(conn, "/")
+  describe "GET /" do
+    test "shows sign in button if no current_user exists", %{conn: conn} do
+      conn = get(conn, "/")
 
-    assert html_response(conn, 200)
+      assert html_response(conn, 200) =~ "Sign in with Github"
+    end
+
+    test "shows sign out button if current_user exists", %{conn: conn} do
+      conn =
+        conn
+        |> init_test_session([])
+        |> put_session(:current_user, %Sync.Github.User{id: 1, name: "test"})
+        |> get("/")
+
+      assert html_response(conn, 200) =~ "Sign out"
+    end
   end
 end

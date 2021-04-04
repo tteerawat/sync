@@ -7,6 +7,7 @@ defmodule SyncWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug SyncWeb.AuthPlug
   end
 
   pipeline :api do
@@ -17,10 +18,14 @@ defmodule SyncWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-  end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SyncWeb do
-  #   pipe_through :api
-  # end
+    get "/sign-in", AuthController, :sign_in
+    delete "/sign-out", AuthController, :sign_out
+    get "/auth/callback", AuthController, :callback
+
+    get "/profile", ProfileController, :show
+    post "/profile", ProfileController, :map_user
+
+    get "/events", EventController, :index
+  end
 end

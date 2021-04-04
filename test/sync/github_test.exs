@@ -1,11 +1,7 @@
 defmodule Sync.GithubTest do
   use ExUnit.Case, async: true
 
-  import Mox
-
   alias Sync.Github
-
-  setup :verify_on_exit!
 
   setup do
     {:ok, bypass: Bypass.open()}

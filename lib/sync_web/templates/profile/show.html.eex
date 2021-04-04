@@ -1,0 +1,9 @@
+<h1>Profile</h1>
+
+<p>Click the name to map your user to.</p>
+
+<ol>
+    <%= for user <- @repo_users do %>
+        <li><%= link user.name, to: Routes.profile_path(@conn, :map_user, %{id: user.id, name: user.name}), method: :post %></li>
+    <% end %>
+</ol>

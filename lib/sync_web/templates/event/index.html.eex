@@ -1,0 +1,11 @@
+<h1>Events</h1>
+
+<%= if Enum.empty?(@events) do %>
+    <%= "No PRs mentioned to current mapped user!" %>
+<% else %>
+    <ol>
+        <%= for event <- @events do %>
+            <li><%= event.body %></li>
+        <% end %>
+    </ol>
+<% end %>
