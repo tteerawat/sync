@@ -41,4 +41,16 @@ defmodule Sync.PRSyncServerTest do
       assert result == []
     end
   end
+
+  describe "list_users/0" do
+    test "returns users from owner and repo in state" do
+      expect(Sync.MockGithub, :list_repo_users!, fn "serokell", "test" ->
+        []
+      end)
+
+      result = PRSyncServer.list_users()
+
+      assert result == []
+    end
+  end
 end

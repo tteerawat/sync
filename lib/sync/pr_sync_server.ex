@@ -15,6 +15,11 @@ defmodule Sync.PRSyncServer do
     GenServer.call(__MODULE__, :list_prs)
   end
 
+  @spec list_users :: [Sync.Github.User.t()]
+  def list_users do
+    GenServer.call(__MODULE__, :list_users)
+  end
+
   @impl true
   def init(opts) do
     initial_state = %{
@@ -34,6 +39,13 @@ defmodule Sync.PRSyncServer do
   @impl true
   def handle_call(:list_prs, _, state) do
     {:reply, state.prs, state}
+  end
+
+  @impl true
+  def handle_call(:list_users, _, %{owner: owner, repo: repo} = state) do
+    users = @github.list_repo_users!(owner, repo)
+
+    {:reply, users, state}
   end
 
   @impl true
