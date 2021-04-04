@@ -24,18 +24,18 @@ defmodule Sync.GithubTest do
     end
   end
 
-  describe "list_repo_prs!/3" do
+  describe "list_repo_prs!/4" do
     test "returns a list of github pull requests of the given repo", %{bypass: bypass} do
       Bypass.expect_once(bypass, "GET", "/repos/serokell/test/pulls", fn conn ->
-        Plug.Conn.resp(conn, 200, "[{\"body\":\"test\",\"title\":\"test\"}]")
+        Plug.Conn.resp(conn, 200, "[{\"id\": 1, \"body\":\"test\",\"title\":\"test\"}]")
       end)
 
       base_api_url = "http://localhost:#{bypass.port}"
 
-      result = Github.list_repo_prs!("serokell", "test", base_api_url)
+      result = Github.list_repo_prs!("serokell", "test", base_api_url: base_api_url)
 
       assert result == [
-               %Github.PR{title: "test", body: "test"}
+               %Github.PR{id: 1, title: "test", body: "test"}
              ]
     end
   end

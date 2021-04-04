@@ -9,9 +9,10 @@ defmodule Sync.Github do
   end
 
   defmodule PR do
-    defstruct [:title, :body]
+    defstruct [:id, :title, :body]
 
     @type t :: %__MODULE__{
+            id: non_neg_integer(),
             title: String.t(),
             body: String.t()
           }
@@ -40,14 +41,18 @@ defmodule Sync.Github do
     end)
   end
 
-  @spec list_repo_prs!(String.t(), String.t(), String.t()) :: [PR.t()]
-  def list_repo_prs!(owner, repo, base_api_url \\ @base_api_url) do
+  @spec list_repo_prs!(String.t(), String.t(), Keyword.t()) :: [PR.t()]
+  def list_repo_prs!(owner, repo, opts \\ []) do
+    base_api_url = Keyword.get(opts, :base_api_url, @base_api_url)
+
     url = base_api_url <> "/repos/#{owner}/#{repo}/pulls"
 
     query_params = %{
-      per_page: @per_page,
+      page: opts[:page] || 1,
+      per_page: opts[:per_page] || @per_page,
       state: "all",
-      sort: "created"
+      sort: "created",
+      direction: "asc"
     }
 
     headers = [{"Accept", "application/vnd.github.v3+json"}]
@@ -55,8 +60,8 @@ defmodule Sync.Github do
     {:ok, %HTTPClient.JsonResponse{body: body}} =
       HTTPClient.json_request(:get, url, headers: headers, query_params: query_params)
 
-    Enum.map(body, fn %{title: title, body: body} ->
-      %PR{title: title, body: body}
+    Enum.map(body, fn %{id: id, title: title, body: body} ->
+      %PR{id: id, title: title, body: body}
     end)
   end
 end
